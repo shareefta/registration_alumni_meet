@@ -1,0 +1,38 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <title>Alumni Meet</title>
+</head>
+
+<body style="background: linear-gradient(to right, #f10392, #fe887b);">
+    <div class="container-fluid mt-4">
+        <header>
+            <div class="row justify-content-center mt-2">
+                {% load static %}
+                <img src="{% static 'images/banner_alumni_meet.jpg' %}" style="width: 40%;" alt="Alumni Meet Banner">
+            </div>
+            <div class="row justify-content-center mt-3">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert {% if message.tags %}alert-{{ message.tags }}{% else %}alert-info{% endif %}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </header>
+    </div>
+    
+    <div class="container mt-3">
+        <main class="col-md-12">
+            <div class="row justify-content-center">
+                <div class="col-md-4 card m-2" style="max-width: 15rem; background: linear-gradient(to right, #f10392, #fe887b);">
+                    <div class="card-body text-center"> 
+                        <a href="{% url 'alumni_create_by_user' %}" class="text-white font-weight-bold" style="font-size: 20px; line-height: 1.5;">Alumni Registration</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>

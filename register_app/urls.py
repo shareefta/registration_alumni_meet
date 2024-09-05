@@ -18,5 +18,7 @@ urlpatterns = [
     
     #alumni
     path('', alumni_home, name='alumni_home'),
-    
+    path('alumni_create_by_user/', alumni_create_by_user, name="alumni_create_by_user"),
+    path('alumni_camp/', alumni_camp, name="alumni_camp"),
+    path('camp_registration/', camp_registration, name="camp_registration"),
 ]

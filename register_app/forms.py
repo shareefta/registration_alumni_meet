@@ -36,3 +36,6 @@ class AlumniForm(forms.ModelForm):
 
 class UploadFileForm(forms.Form):
     file = forms.FileField()
+    
+class CampRegistrationForm(forms.Form):
+    mobile_number = forms.CharField(max_length=15, widget=forms.TextInput(attrs={"class": "form-control"}))

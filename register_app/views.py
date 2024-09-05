@@ -188,5 +188,45 @@ def admin_logout(request):
     return redirect('login')
 
 def alumni_home(request):
-    return render(request, 'alumni/alumni_home_user.html')
+    return render(request, 'alumni/alumni_home_reg.html')
+
+def alumni_create_by_user(request):
+    if request.method == 'POST':
+        form = AlumniForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Alumni Registration Successful!')
+            return redirect('alumni_home')
+    else:
+        form = AlumniForm()
+    return render(request, 'alumni/alumni_create_by_user.html', {'form': form})
+
+def alumni_camp(request):
+    return render(request, 'alumni/alumni_camp_reg.html')
+
+def camp_registration(request):
+    if request.method == 'POST':
+        form = CampRegistrationForm(request.POST)
+        if form.is_valid():
+            mobile_number = form.cleaned_data['mobile_number']
+            try:
+                alumni = Alumni.objects.get(mobile_number=mobile_number)
+                if 'register' in request.POST:
+                    if alumni.is_registered:
+                        messages.info(request, 'You have already registered!!!')
+                        return redirect('alumni_camp')
+                    else:
+                        alumni.is_registered = True
+                        alumni.save()
+                        messages.success(request, 'You have successfully registered for the camp!')
+                        return redirect('alumni_camp')
+                elif 'cancel' in request.POST:
+                    return redirect('alumni_camp')
+            except Alumni.DoesNotExist:
+                form.add_error('mobile_number', 'This mobile number is not registered.')
+        else:
+            print(form.errors)  # Print form errors for debugging
+    else:
+        form = CampRegistrationForm()
+    return render(request, 'alumni/camp_registration.html', {'form': form})
 
