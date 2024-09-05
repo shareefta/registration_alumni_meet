@@ -1,0 +1,25 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row col-md-12 justify-content-center">
+            <section class="col-md-6">
+                <div class="row mt-3 pt-3">
+                    <div class="col-md-6 card m-2" style="max-width: 15rem; background: linear-gradient(to right, #fe887b, #f10392);">
+                        <div class="card-body text-center">
+                            <a href="{% url 'alumni_list' %}" class="text-white font-weight-bold" style="font-size: 20px; line-height: 1.5;">Registration Details</a>
+                        </div>
+                    </div>
+                    <div class="col-md-6 card m-2" style="max-width: 15rem; background: linear-gradient(to right, #f10392, #fe887b);">
+                        <div class="card-body text-center"> 
+                            <a href="{% url 'participants_list' %}" class="text-white font-weight-bold" style="font-size: 20px; line-height: 1.5;">Participant's Details</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+{% endblock %}
+

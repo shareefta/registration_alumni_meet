@@ -1,0 +1,87 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <main class="col-md-12">
+                <div class="row justify-content-center">
+                    <div class="col-md-4 card m-2" style="max-width: 15rem; background: linear-gradient(to right, #fe887b, #f10392);">
+                        <div class="card-body text-center">
+                            <a href="" class="text-white font-weight-bold" style="font-size: 20px; line-height: 1.5;">Admin Users</a>
+                        </div>
+                    </div>
+                    <div class="col-md-4 card m-2" style="max-width: 15rem; background: linear-gradient(to right, #f10392, #fe887b);">
+                        <div class="card-body text-center"> 
+                            <a href="{% url 'alumni' %}" class="text-white font-weight-bold" style="font-size: 20px; line-height: 1.5;">Alumni Meet</a>
+                        </div>
+                    </div>
+                    <div class="col-md-4 card m-2" style="max-width: 15rem; background: linear-gradient(to right, #fe887b, #f10392);">
+                        <div class="card-body text-center">
+                            <a href="{% url 'alumni_upload' %}" class="text-white font-weight-bold" style="font-size: 20px; line-height: 1.5;">Upload File</a>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    <hr>
+    <section class="">
+        <div class="row col-md-12 justify-content-center">
+            <div class="col-md-5 table-responsive" style="border-right: 1px solid #fdfafa;">
+                <h4 class="text-center text-dark mb-3">Alumni Registration Status</h4>
+                <table class="table table-hover table-bordered" style="width: 100%; border: 2px solid #160602;">
+                    <thead>
+                        <tr class="text-center text-light">
+                            <th class="align-middle" style="line-height: 1; width: 20%; border: 1px solid #160602;" rowspan="2">Alumni</th>
+                            <th class="align-middle" style="line-height: 1; width: 20%; border: 1px solid #160602;" rowspan="2">Wives</th>
+                            <th class="align-middle" style="line-height: 1; width: 30%; border: 1px solid #160602;" colspan="2">Children</th>
+                            <th class="align-middle" style="line-height: 1; width: 25%; border: 1px solid #160602;" rowspan="2">Total Registration</th>
+                        </tr>
+                        <tr class="text-center text-light">
+                            <th class="align-middle" style="line-height: 1; width: 15%; border: 1px solid #160602;">Age 5+</th>
+                            <th class="align-middle" style="line-height: 1; width: 15%; border: 1px solid #160602;">Age 5-</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="text-center text-white">
+                            <td style="border: 1px solid #160602;">{{ reg_alumni }}</td>
+                            <td style="border: 1px solid #160602;">{{ reg_wives }}</td>
+                            <td style="border: 1px solid #160602;">{{ reg_children_above_5 }}</td>
+                            <td style="border: 1px solid #160602;">{{ reg_children_below_5 }}</td>
+                            <td style="border: 1px solid #160602;">{{ total_reg }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-5 table-responsive">
+                <h4 class="text-center text-dark mb-3">Alumni Participation Status</h4>
+                <table class="table table-hover table-bordered" style="width: 100%; border: 2px solid #160602;">
+                    <thead>
+                        <tr class="text-center text-white">
+                            <th class="align-middle" style="line-height: 1; width: 20%; border: 1px solid #160602;" rowspan="2">Alumni</th>
+                            <th class="align-middle" style="line-height: 1; width: 20%; border: 1px solid #160602;" rowspan="2">Wives</th>
+                            <th class="align-middle" style="line-height: 1; width: 30%; border: 1px solid #160602;" colspan="2">Children</th>
+                            <th class="align-middle" style="line-height: 1; width: 25%; border: 1px solid #160602;" rowspan="2">Total Participants</th>
+                        </tr>
+                        <tr class="text-center text-white">
+                            <th class="align-middle" style="line-height: 1; width: 15%; border: 1px solid #160602;">Age 5+</th>
+                            <th class="align-middle" style="line-height: 1; width: 15%; border: 1px solid #160602;">Age 5-</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="text-center text-white">
+                            <td style="border: 1px solid #160602;">{{ total_alumni }}</td>
+                            <td style="border: 1px solid #160602;">{{ total_wives }}</td>
+                            <td style="border: 1px solid #160602;">{{ total_children_below_5 }}</td>
+                            <td style="border: 1px solid #160602;">{{ total_children_above_5 }}</td>
+                            <td style="border: 1px solid #160602;">{{ total_participants }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
