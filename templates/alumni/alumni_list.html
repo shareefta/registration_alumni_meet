@@ -14,6 +14,16 @@
             <div class="m-2">
                 <a class="btn btn-secondary" href="{% url 'export_pdf_alumni' %}">Download PDF</a>
             </div>
+            <div class="m-2">
+                <form action="{% url 'search' %}" class="search" method="GET">
+                    <div class="input-group w-100">
+                        <input type="text" class="form-control" style="width:60%;" placeholder="Search" name="keyword">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div> 
         </div>
         <main class="col-md-12">
             <div class="row justify-content-center">
@@ -21,8 +31,15 @@
                     Registration Details - Alumni Meet
                 </div>
             </div>
-            <div class="table-responsive sticky-header">
-                <table class="table table-hover table-bordered">
+            <section class="section-pagetop bg">
+                <div class="container">
+                    {% if 'search' in request.path %}
+                    <h6 class="title-page text-center">Search Results for "{{ keyword }}"</h6>
+                    {% endif %}
+                </div>
+            </section>
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered sticky-header">
                     <thead>
                         <tr style="text-align: center;">
                             <th class="align-middle" style="line-height: 1;" rowspan="2">Sl. No.</th>
@@ -36,8 +53,8 @@
                             <th class="align-middle" style="line-height: 1;" colspan="2" rowspan="2">Actions</th>
                         </tr>
                         <tr style="text-align: center;">
-                            <th style="line-height: .5;">Age 5+ </th>
-                            <th style="line-height: .5;">Age 5- </th>
+                            <th style="line-height: .5;">5+</th>
+                            <th style="line-height: .5;">5-</th>
                         </tr>
                     </thead>
                     <tbody>

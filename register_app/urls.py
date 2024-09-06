@@ -15,6 +15,7 @@ urlpatterns = [
     path('export_pdf_alumni/', export_pdf_alumni, name="export_pdf_alumni"),
     path('export_pdf_participants', export_pdf_participants, name="export_pdf_participants"),
     path('participants_list/', participants_list, name="participants_list"),
+    path('search/', search, name="search"),
     
     #alumni
     path('', alumni_home, name='alumni_home'),

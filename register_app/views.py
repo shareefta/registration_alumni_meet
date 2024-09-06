@@ -9,7 +9,8 @@ from django.db.models.functions import Lower
 from django.template.loader import render_to_string
 from xhtml2pdf import pisa
 from io import BytesIO
-from django.db.models import Count, Sum
+from django.db.models import Sum
+from django.db.models import Q
 
 # Create your views here.
 def admin_login(request):
@@ -62,12 +63,15 @@ def alumni(request):
 @login_required
 def alumni_list(request):
     alumni = Alumni.objects.all().order_by(Lower('name'))
-    
-    paginator = Paginator(alumni, 25)
+
+    paginator = Paginator(alumni, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     
-    return render(request, 'alumni/alumni_list.html', {'page_obj' : page_obj})
+    context = {
+        'page_obj': page_obj,
+    }
+    return render(request, 'alumni/alumni_list.html', context)
 
 @login_required
 def alumni_create(request):
@@ -109,6 +113,10 @@ def alumni_upload(request):
                     # Read the Excel file
                     df = pd.read_excel(file)
                     df.columns = [col.strip().lower() for col in df.columns]
+
+                    # Replace NaN values with empty strings
+                    df.fillna('', inplace=True)
+
                     # Process the file and save to the database
                     for index, row in df.iterrows():
                         alumni_data = {
@@ -116,7 +124,7 @@ def alumni_upload(request):
                             'place': row.get('place'),
                             'mobile_number': row.get('mobile_number'),
                             'whatsapp_number': row.get('whatsapp_number'),
-                            'name_of_wife': row.get('name_of_wife'),
+                            'name_of_wife': row.get('name_of_wife') if row.get('name_of_wife') != '' else None,
                             'no_of_child_below_5': row.get('no_of_child_below_5'),
                             'no_of_child_above_5': row.get('no_of_child_above_5'),
                         }
@@ -130,7 +138,6 @@ def alumni_upload(request):
                     messages.success(request, 'Alumni uploaded successfully.')
                     return redirect('alumni_list')
                 except Exception as e:
-                    print('Step 9')
                     messages.error(request, f'Error processing file: {e}')
             else:
                 messages.error(request, 'Please upload an Excel file.')
@@ -171,6 +178,33 @@ def export_pdf_participants(request):
         response.write(result.getvalue())
         return response
     return None
+
+@login_required
+def search(request):
+    alumni_queryset = Alumni.objects.all()
+
+    keyword = request.GET.get('keyword', '')
+
+    if keyword:
+        alumni_queryset = alumni_queryset.filter(
+            Q(name__icontains=keyword) | 
+            Q(name_of_wife__icontains=keyword) | 
+            Q(mobile_number__icontains=keyword)
+        )
+
+    alumni_count = alumni_queryset.count()
+    
+    paginator = Paginator(alumni_queryset, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+    context = {
+        'page_obj': page_obj,
+        'alumni_count': alumni_count,
+        'keyword': keyword
+    }
+
+    return render(request, 'alumni/alumni_list.html', context)
 
 @login_required
 def participants_list(request):
